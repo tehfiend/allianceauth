@@ -10,17 +10,10 @@ from openfire import UserService
 
 from authentication.managers import AuthServicesInfoManager
 
-import threading
-
 
 class OpenfireManager:
     def __init__(self):
         pass
-
-    @staticmethod
-    def send_broadcast_threaded(group_name, broadcast_message):
-        broadcast_thread = XmppThread(1, "XMPP Broadcast Thread", 1, group_name, broadcast_message)
-        broadcast_thread.start()
 
     @staticmethod
     def __add_address_to_username(username):
@@ -126,16 +119,3 @@ class OpenfireManager:
                         client.Process(1)
 
         client.disconnect()
-
-class XmppThread (threading.Thread):
-    def __init__(self, threadID, name, counter, group, message,):
-        threading.Thread.__init__(self)
-        self.threadID = threadID
-        self.name = name
-        self.counter = counter
-        self.group = group
-        self.message = message
-    def run(self):
-        print "Starting " + self.name
-        OpenfireManager.send_broadcast_message(self.group, self.message)
-        print "Exiting " + self.name

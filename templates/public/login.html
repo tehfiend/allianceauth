@@ -12,7 +12,7 @@
     <meta name="author" content="">
 
     <title>{{ ALLIANCE_NAME }} - Login</title>
-
+    <link rel="icon" type="image/png" href="http://www.cyno.link/favicon.ico">
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Custom Fonts -->
@@ -45,7 +45,7 @@
                 <a href="{% url 'auth_register_user' %}">
                     <button class="btn btn- btn-success btn-block">Register</button>
                 </a>
-
+		<center><a href="http://members.cyno.link/forums/viewtopic.php?&t=5">Instructions</a></center>
                 <form class="form-signin" role="form" action="{% url 'auth_login_user' %}" method="POST">
                     {% csrf_token %}
                     <h2 class="form-signin-heading text-center">Please sign in</h2>

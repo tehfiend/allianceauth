@@ -13,7 +13,6 @@
 
     <title>{% block title %}Empty title{% endblock title %}</title>
     <link rel="icon" type="image/png" href="http://www.cyno.link/favicon.ico">
-
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Custom Fonts -->
@@ -129,7 +128,11 @@
                         {% endif %}
 
                         {% if  perms.auth.alliance_member or perms.auth.blue_member %}
-
+							<li>
+                                <a {% ifequal request.path "/fits" %} class="active" {% endifequal %}
+                                                                                  href="{% url 'auth_fleet_fits' %}"><i
+                                        class="fa fa-bolt fa-fw grayiconecolor"></i> Fleet Doctrines</a>
+                            </li>
                             <li>
                                 <a {% ifequal request.path "/timer_management" %} class="active" {% endifequal %}
                                                                                   href="{% url 'auth_timer_view' %}"><i

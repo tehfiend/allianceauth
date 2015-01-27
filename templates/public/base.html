@@ -148,6 +148,12 @@
 
                         {% endif %}
 
+                            <li>
+                                <a {% ifequal request.path "/intel/" %} class="active" {% endifequal %}
+                                                                      href="{% url 'auth_intel_view' %}"><i
+                                        class="fa fa-money fa-fw grayiconecolor"></i> Intel Tool</a>
+                            </li>
+
 
                         <li class="text-center divider-horizontal">
                             <h5>Util</h5>

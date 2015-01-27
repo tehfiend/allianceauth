@@ -42,7 +42,8 @@
                     <form class="form-signin" role="form" action="{% url 'auth_add_api_key' %}" method="POST">
                         {% csrf_token %}
                         {{ form|bootstrap }}
-                        <br/>
+                        NOTE: Only check this box if your are NOT in the alliance.<br/>
+			<br/>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Add Key</button>
                     </form>
                 </div>

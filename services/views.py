@@ -317,3 +317,11 @@ def fleet_fits(request):
     context = {}
     return render_to_response('registered/fleetfits.html', context,
 context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(service_blue_alliance_test)
+def intel(request):
+    context = {}
+    return render_to_response('registered/intel.html', context, context_instance=RequestContext(request)) # TO DO: Create auth cookie and redirect to intel server
+

@@ -121,18 +121,28 @@
 
                         {% if perms.auth.group_management %}
                             <li>
-                                <a {% ifequal request.path "/user/group_management/" %} class="active" {% endifequal %}
+                                <a {% ifequal request.path "/user/group_management" %} class="active" {% endifequal %}
                                                                                         href="{% url 'auth_group_management' %}"><i
                                         class="fa fa-lock fa-sitemap grayiconecolor"></i> Group Management</a>
                             </li>
                         {% endif %}
 
                         {% if  perms.auth.alliance_member or perms.auth.blue_member %}
-							<li>
+
+                            <li>
+                                <a {% ifequal request.path "/intel" %} class="active" {% endifequal %}
+                                                                                   href="{% url 'auth_intel' %}"><i
+                                        class="fa fa-share-alt fa-fw grayiconecolor"></i> Intel</a>
+                            </li>
+
+<!--
+                            <li>
+
                                 <a {% ifequal request.path "/fits" %} class="active" {% endifequal %}
                                                                                   href="{% url 'auth_fleet_fits' %}"><i
                                         class="fa fa-bolt fa-fw grayiconecolor"></i> Fleet Doctrines</a>
                             </li>
+-->
                             <li>
                                 <a {% ifequal request.path "/timer_management" %} class="active" {% endifequal %}
                                                                                   href="{% url 'auth_timer_view' %}"><i
@@ -147,13 +157,6 @@
                             </li>
 
                         {% endif %}
-
-                            <li>
-                                <a {% ifequal request.path "/intel/" %} class="active" {% endifequal %}
-                                                                      href="{% url 'auth_intel_view' %}"><i
-                                        class="fa fa-money fa-fw grayiconecolor"></i> Intel Tool</a>
-                            </li>
-
 
                         <li class="text-center divider-horizontal">
                             <h5>Util</h5>

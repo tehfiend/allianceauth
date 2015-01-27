@@ -57,4 +57,4 @@ target/
 alliance_auth/settings.py
 
 #PID files
-.pid
+*.pid

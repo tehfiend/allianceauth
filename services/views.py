@@ -321,17 +321,15 @@ def fleet_fits(request):
     context = {}
     return render_to_response('registered/fleetfits.html', context, context_instance=RequestContext(request))
 
-
 @login_required
 @user_passes_test(service_blue_alliance_test)
 def intel(request):
     domain = settings.SPYTASTIC_DOMAIN
     response = HttpResponseRedirect("https://" +  domain)
-    max_age = 60 * 60 * 5 # 5 minutes
+    max_age = 60 * 5 # 5 minutes
     expires = datetime.datetime.strftime(datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
     domain = domain.split('.')
     response.set_cookie('intel', request.session.session_key, max_age=max_age, expires=expires, domain='.' +  domain[1] + "." + domain[2])
-
     return response
 
 def intel_validate(request):
@@ -348,5 +346,4 @@ def intel_validate(request):
                 reply = 'user_denied'
         except:
             reply = 'not_found'
-
     return HttpResponse(reply, content_type="text/plain")

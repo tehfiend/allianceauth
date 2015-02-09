@@ -59,6 +59,5 @@ alliance_auth/settings.py
 # PID files
 *.pid
 
-# CYNO INTEL SYSTEM
-templates/registered/intel.html
-intel/*
+# DEBUG FILES
+./debug.sh

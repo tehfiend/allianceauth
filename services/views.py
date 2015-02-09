@@ -1,9 +1,13 @@
 from django.template import RequestContext
 from django.shortcuts import HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.sessions.models import Session
+from django.contrib.auth.models import User
+from django.conf import settings
 
 from eveonline.models import EveCharacter
 from authentication.models import AuthServicesInfo
@@ -315,13 +319,34 @@ def reset_teamspeak3_perm(request):
 @login_required
 def fleet_fits(request):
     context = {}
-    return render_to_response('registered/fleetfits.html', context,
-context_instance=RequestContext(request))
+    return render_to_response('registered/fleetfits.html', context, context_instance=RequestContext(request))
 
 
 @login_required
 @user_passes_test(service_blue_alliance_test)
 def intel(request):
-    context = {}
-    return render_to_response('registered/intel.html', context, context_instance=RequestContext(request)) # TO DO: Create auth cookie and redirect to intel server
+    domain = settings.SPYTASTIC_DOMAIN
+    response = HttpResponseRedirect("https://" +  domain)
+    max_age = 60 * 60 * 5 # 5 minutes
+    expires = datetime.datetime.strftime(datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
+    domain = domain.split('.')
+    response.set_cookie('intel', request.session.session_key, max_age=max_age, expires=expires, domain='.' +  domain[1] + "." + domain[2])
 
+    return response
+
+def intel_validate(request):
+    if settings.SPYTASTIC_IP != request.META.get('REMOTE_ADDR'):
+        reply = 'access_denied'
+    else:
+        try:
+            session = Session.objects.get(session_key=request.POST['sessionid'])
+            uid = session.get_decoded().get('_auth_user_id')
+            user = User.objects.get(pk=uid)
+            if service_blue_alliance_test(user):
+                reply = str(uid) + '\n' + user.username
+            else:
+                reply = 'user_denied'
+        except:
+            reply = 'not_found'
+
+    return HttpResponse(reply, content_type="text/plain")
